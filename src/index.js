@@ -35,6 +35,7 @@ fetch('https://restcountries.com/v3.1/name/peru')
   })
   .then(country => {
     console.log(country);
+
     const markup = countryCardTemplate(country);
     console.log(markup);
     refs.countryInfo.innerHTML = markup;

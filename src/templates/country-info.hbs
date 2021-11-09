@@ -1,5 +1,7 @@
-<img src='{{flags.svg}}' alt='{{name.official}}' />
-<h1>{{name.official}}</h1>
-<p>Capital:{{capital}}</p>
-<p>Population:{{population}}</p>
-<p>Languages:{{languages}}</p>
+<img src='{{0.flags.svg}}' alt='{{0.name.official}}' />
+<h1>{{0.name.official}}</h1>
+<p>Capital:{{0.capital}}</p>
+<p>Population:{{0.population}}</p>
+{{#each 0.languages}}
+  <p>Languages:{{0.languages}}</p>
+{{/each}}
