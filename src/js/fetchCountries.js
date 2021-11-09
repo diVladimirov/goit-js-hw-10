@@ -1,19 +1,8 @@
-// export function fetchCountries(country) {
-//   return fetch(`https://restcountries.com/v3.1/name/usa`)
-//     .then(response => {
-//       if (!response.ok) {
-//         throw Error(response.statusText);
-//       }
-//       return response.json();
-//     })
-//     .then(country => console.log(country));
-// }
-
-// fetch(`https://restcountries.com/v3.1/name/usa`)
-//   .then(response => {
-//     if (!response.ok) {
-//       throw Error(response.statusText);
-//     }
-//     return response.json();
-//   })
-//   .then(country => console.log(country));
+export function fetchCountries(country) {
+  return fetch(`https://restcountries.com/v3.1/name/${country}`).then(response => {
+    if (!response.ok) {
+      return Promise.reject('Oops, there is no country with that name');
+    }
+    return response.json();
+  });
+}

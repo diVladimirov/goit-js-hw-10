@@ -13,53 +13,41 @@ const refs = {
   countryInfo: document.querySelector('.country-info'),
 };
 
-// refs.inputCountry.addEventListener('submit', debounce(onSubmit, DEBOUNCE_DELAY));
-// refs.inputCountry.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+refs.inputCountry.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
-// function onSubmit(event) {
-//   event.preventDefault();
-//   const country =
-// }
+function onInput() {
+  if (refs.inputCountry.value.trim() === ' ') {
+    deleteMarkup();
+    return;
+  }
+  deleteMarkup();
 
-// function onInput(event) {
-//   fetchCountries(refs.inputCountry.value);
-// }
+  fetchCountries(refs.inputCountry.value.trim())
+    .then(checkInputLength)
+    .catch(Notiflix.Notify.failure);
 
-// console.log(refs.inputCountry);
-// console.log(refs.countryList);
-// console.log(refs.countryInfo);
+  function checkInputLength(value) {
+    if (value.length > 10) {
+      Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
+    } else if (value.length >= 2 && value.length <= 10) {
+      showCountryList(value);
+    } else if (value.length === 1) {
+      showCountry(value);
+    }
+  }
+}
 
-fetch('https://restcountries.com/v3.1/name/peru')
-  .then(response => {
-    return response.json();
-  })
-  .then(country => {
-    console.log(country);
+function showCountryList(country) {
+  const markupList = countryListTemplate({ ...country });
+  refs.countryList.innerHTML = markupList;
+}
 
-    const markup = countryCardTemplate(country);
-    console.log(markup);
-    refs.countryInfo.innerHTML = markup;
-  })
-  .catch(error => {
-    console.log(error);
-  });
+function showCountry(country) {
+  const markup = countryCardTemplate(...country);
+  refs.countryInfo.innerHTML = markup;
+}
 
-// fetch('https://restcountries.com/v3.1/name/usa')
-//   .then(response => {
-//     return response.json();
-//   })
-//   .then(country => {
-//     console.log(country);
-//     for (const countr of country) {
-//       console.log(countr.capital[0]);
-//       console.log(countr.name.official);
-//       console.log(countr.population);
-//       console.log(countr.flags.svg);
-//       console.log(countr.languages.eng);
-//       const lang = countr.languages;
-//       console.log(lang);
-//       for (const la of lang) {
-//         console.log(la);
-//       }
-//     }
-//   });
+function deleteMarkup() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
+}

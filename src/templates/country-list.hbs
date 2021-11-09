@@ -1,3 +1,6 @@
-{{!-- {{#each abilities}}
-  <li class='list-group-item'>{{ability.name}}</li>
-{{/each}} --}}
+{{#each this}}
+  <li class='country-list__item'>
+    <img src='{{flags.svg}}' alt='{{name.official}}' width='100' class='country-list__img' />
+    <p class='country-list__paragraph'>{{name.official}}</p>
+  </li>
+{{/each}}
